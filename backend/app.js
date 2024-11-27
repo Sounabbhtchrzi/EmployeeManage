@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 // Enable CORS to allow requests from your React frontend
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Your React frontend URL
+    origin: process.env.FRONTEND_URL, // Your React frontend URL
     credentials: true, // Allow credentials like cookies
   })
 );

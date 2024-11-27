@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../utils/AxiosInstance'; // Ensure this is correctly imported
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,7 @@ const Login = () => {
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -18,6 +21,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Clear previous error messages
+    setErrorMessages([]);
+
+    // Simple client-side validation
     const errors = [];
     if (!formData.email) errors.push("Email is required.");
     if (!formData.password) errors.push("Password is required.");
@@ -25,27 +32,21 @@ const Login = () => {
     if (errors.length > 0) {
       setErrorMessages(errors);
     } else {
-      setErrorMessages([]);
-
       try {
-        const response = await axiosInstance.post("/auth/login", formData);
+        const response = await axiosInstance.post("api/auth/login", formData);
+        
+        // On successful login
         if (response.data.success) {
-          alert("Registration successful!");
-          // Redirect to login page or another flow
-          window.location.href = "/auth/login";
+          alert("Login successful!");
+          localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user info
+          navigate('/profile'); // Redirect to the profile page after login
         } else {
-          setErrorMessages([response.data.message || "Registration failed."]);
+          setErrorMessages([response.data.message || "Login failed. Please try again."]);
         }
       } catch (error) {
-        setErrorMessages([
-          error.response?.data?.message || "An error occurred during registration.",
-        ]);
+        setErrorMessages([error.response?.data?.message || "An error occurred during login."]);
       }
     }
-
-    // Perform login logic here (e.g., API call, form validation)
-    // On success, redirect or update state accordingly
-    // On failure, set error messages
   };
 
   return (
@@ -54,7 +55,7 @@ const Login = () => {
       <header className="w-full text-center mb-8">
         <h1 className="text-3xl font-semibold text-gray-800">Login</h1>
       </header>
-  
+
       {/* Display Flash/Error Messages */}
       {errorMessages.length > 0 && (
         <div className="w-full max-w-md mx-auto mb-6">
@@ -69,7 +70,7 @@ const Login = () => {
           </div>
         </div>
       )}
-  
+
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
         <div className="mb-4">
@@ -83,6 +84,7 @@ const Login = () => {
             value={formData.email}
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
           />
         </div>
         <div className="mb-4">
@@ -96,6 +98,7 @@ const Login = () => {
             value={formData.password}
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
           />
         </div>
         <div className="mb-4">
@@ -106,7 +109,7 @@ const Login = () => {
           />
         </div>
       </form>
-  
+
       {/* Register Redirect */}
       <div className="w-full max-w-md mx-auto text-center mt-4">
         <p className="text-sm text-gray-600">
@@ -118,14 +121,13 @@ const Login = () => {
           </span>
         </p>
       </div>
-  
+
       {/* Footer Section */}
       <footer className="w-full text-center mt-8 py-4 bg-gray-800 text-white">
         <p>&copy; 2024 Your Website. All rights reserved.</p>
       </footer>
     </div>
   );
-  
 };
 
 export default Login;

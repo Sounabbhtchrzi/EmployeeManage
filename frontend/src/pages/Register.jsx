@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosInstance from "../../utils/AxiosInstance"; // Adjust the path to your axiosInstance file
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const Register = () => {
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // Handles form field changes
   const handleChange = (e) => {
@@ -32,13 +35,14 @@ const Register = () => {
       setErrorMessages(errors);
     } else {
       setErrorMessages([]);
+      setIsSubmitting(true); // Set submitting state to true
 
       try {
-        const response = await axiosInstance.post("/auth/register", formData);
+        const response = await axiosInstance.post("api/auth/register", formData);
         if (response.data.success) {
           alert("Registration successful!");
           // Redirect to login page or another flow
-          window.location.href = "/auth/login";
+          navigate('/profile');
         } else {
           setErrorMessages([response.data.message || "Registration failed."]);
         }
@@ -46,6 +50,8 @@ const Register = () => {
         setErrorMessages([
           error.response?.data?.message || "An error occurred during registration.",
         ]);
+      } finally {
+        setIsSubmitting(false); // Reset submitting state after request
       }
     }
   };
@@ -79,12 +85,13 @@ const Register = () => {
             Email/Username
           </label>
           <input
-            type="text"
+            type="email"
             name="email"
             id="email"
             value={formData.email}
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
           />
         </div>
         <div className="mb-4">
@@ -98,6 +105,7 @@ const Register = () => {
             value={formData.password}
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
           />
         </div>
         <div className="mb-4">
@@ -111,14 +119,17 @@ const Register = () => {
             value={formData.password2}
             onChange={handleChange}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
           />
         </div>
         <div className="mb-4">
-          <input
+          <button
             type="submit"
-            value="Register"
-            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+            disabled={isSubmitting} // Disable button while submitting
+            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-indigo-400"
+          >
+            {isSubmitting ? "Registering..." : "Register"}
+          </button>
         </div>
       </form>
   
@@ -127,7 +138,7 @@ const Register = () => {
         <p className="text-sm text-gray-600">
           Already have an account?{" "}
           <span>
-            <a href="/login" className="text-indigo-600 hover:text-indigo-700">
+            <a href="/auth/login" className="text-indigo-600 hover:text-indigo-700">
               Login
             </a>
           </span>
@@ -140,7 +151,6 @@ const Register = () => {
       </footer>
     </div>
   );
-  
 };
 
 export default Register;
