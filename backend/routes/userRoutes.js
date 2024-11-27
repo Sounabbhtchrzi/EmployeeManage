@@ -4,6 +4,7 @@ import { getProfile } from '../controllers/userController.js'; // Add .js extens
 const router = Router(); // Initialize the router
 
 // Define the route for profile
-router.get('/profile', getProfile);
+router.get('/profile/:id', getProfile);
+
 
 export default router; // Export the router

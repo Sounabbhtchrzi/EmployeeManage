@@ -12,6 +12,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import "./utils/passport.js"
 
 // Load environment variables from .env file
 dotenv.config();
@@ -61,7 +62,7 @@ app.use(
 // Initialize Passport.js for authentication
 app.use(passport.initialize());
 app.use(passport.session());
-import './utils/passport.js'; // Passport configuration
+
 
 // Flash messages middleware
 app.use(flash());
@@ -73,6 +74,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
+
 
 // Set up routes
 app.use('/api', userRoutes);

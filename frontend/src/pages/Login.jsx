@@ -38,8 +38,9 @@ const Login = () => {
         // On successful login
         if (response.data.success) {
           alert("Login successful!");
-          localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user info
-          navigate('/profile'); // Redirect to the profile page after login
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          const userId =response.data.user.id;
+          navigate(`/profile/${userId}`); // Redirect to the profile page after login
         } else {
           setErrorMessages([response.data.message || "Login failed. Please try again."]);
         }

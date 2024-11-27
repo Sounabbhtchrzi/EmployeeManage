@@ -1,11 +1,25 @@
 import React from "react";
+import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header"; // Adjust the path based on your project structure
 
 const Home = () => {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // Ensure this is correctly imported
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      navigate("/");
+    } else {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   return (
     <div>
       {/* Header Component */}
-        <Header />
+        <Header user={user}/>
      
       {/* Main Section with Background Image */}
       <section

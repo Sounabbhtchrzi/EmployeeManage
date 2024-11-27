@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { loginUser, registerUser, logoutUser } from '../controllers/authController.js';
-//import { registerValidator } from '../utils/validators.js';
 import { ensureLoggedOut, ensureLoggedIn } from 'connect-ensure-login';
+
 
 const router = Router();
 

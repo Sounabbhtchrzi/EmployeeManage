@@ -49,7 +49,7 @@ export const getUserById = async (req, res, next) => {
 export const updateUserRole = async (req, res, next) => {
   try {
     const { id, role } = req.body;
-
+    console.log(id);
     // Validate ID and role
     if (!id || !role) {
       return res.status(400).json({
@@ -74,13 +74,13 @@ export const updateUserRole = async (req, res, next) => {
     }
 
     // Prevent admin from removing their own admin role
-    if (req.user.id === id) {
-      return res.status(403).json({
-        success: false,
-        message:
-          'Admins cannot remove themselves from the admin role. Ask another admin to update your role.',
-      });
-    }
+    // if (req.user.id === id) {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message:
+    //       'Admins cannot remove themselves from the admin role. Ask another admin to update your role.',
+    //   });
+    // }
 
     // Update the user's role
     const user = await User.findByIdAndUpdate(
