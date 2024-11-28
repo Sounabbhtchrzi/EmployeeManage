@@ -54,4 +54,33 @@ Ensure the following software is installed on your machine:
 ```bash
 git clone https://github.com/your-username/EmployeeManage.git
 cd EmployeeManage
+```
 
+### Setup backend
+```bash
+cd backend
+npm install
+npm start
+``` 
+
+### Setup frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Create .env file in backend
+```bash
+MONOGO_URI= your_mongodb_connection
+SESSION_SECRET= your_secret_key
+PORT=5000
+```
+
+### Create .env file in frontend
+```bash
+BACKEND_URL=http://localhost:5000
+```
+
+### Run the application
+#### Go to the Frontend URL(default: http://localhost:5173) to view it in action
