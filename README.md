@@ -75,11 +75,13 @@ npm run dev
 MONOGO_URI= your_mongodb_connection
 SESSION_SECRET= your_secret_key
 PORT=5000
+FRONTEND_URL=http://localhost:5173
+ADMIN_EMAIL=your_admin_emailId
 ```
 
 ### Create .env file in frontend
 ```bash
-BACKEND_URL=http://localhost:5000
+VITE_BACKEND_URL=http://localhost:5000
 ```
 
 ### Run the application
