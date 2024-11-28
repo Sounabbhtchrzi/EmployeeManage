@@ -73,15 +73,6 @@ export const updateUserRole = async (req, res, next) => {
       });
     }
 
-    // Prevent admin from removing their own admin role
-    // if (req.user.id === id) {
-    //   return res.status(403).json({
-    //     success: false,
-    //     message:
-    //       'Admins cannot remove themselves from the admin role. Ask another admin to update your role.',
-    //   });
-    // }
-
     // Update the user's role
     const user = await User.findByIdAndUpdate(
       id,

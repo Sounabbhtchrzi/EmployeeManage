@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ManageUsers from "./pages/ManageUsers";
+import ModeratorManageUsers from "./pages/ModeratorManageUsers";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/manage" element={<ManageUsers />} />
+        <Route path="/moderate" element={<ModeratorManageUsers />} />
       </Routes>
     </Router>
   );

@@ -28,6 +28,11 @@ const Navbar = ({ user }) => {
                 <Link to="/manage">Manage Users</Link>
               </li>
             )}
+            {user.role.includes('MODERATOR') && (
+              <li>
+                <Link to="/moderate">Manage Users</Link>
+              </li>
+            )}
             <li>
               <button onClick={handleLogout}>Logout</button>
             </li>

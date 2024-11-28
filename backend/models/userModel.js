@@ -34,6 +34,11 @@ const UserSchema = new mongoose.Schema(
             enum: Object.values(roles),
             default: [roles.client],
         },
+        actions: {
+            type: [String],
+            enum: ['WARNING', 'SUSPENSION', 'BAN'],
+            default: [],
+        },
     },
     { timestamps: true }
 );

@@ -12,6 +12,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import moderatorRoutes from './routes/moderatorRoutes.js';
 import "./utils/passport.js"
 
 // Load environment variables from .env file
@@ -80,6 +81,7 @@ app.use((req, res, next) => {
 app.use('/api', userRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/auth',authRoutes);
+app.use('/api/moderator',moderatorRoutes);
 
 // Catch-all route for undefined API endpoints
 app.use((req, res, next) => {
