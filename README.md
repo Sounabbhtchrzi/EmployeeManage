@@ -72,7 +72,7 @@ npm run dev
 
 ### Create .env file in backend
 ```bash
-MONOGO_URI= your_mongodb_connection
+MONGO_URI= your_mongodb_connection
 SESSION_SECRET= your_secret_key
 PORT=5000
 FRONTEND_URL=http://localhost:5173
