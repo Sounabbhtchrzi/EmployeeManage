@@ -12,7 +12,6 @@ const Profile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is logged in
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
       navigate('/login');
@@ -22,7 +21,6 @@ const Profile = () => {
   }, [navigate]);
 
   useEffect(() => {
-    // Fetch profile data from the backend
     const fetchProfile = async () => {
       try {
         setLoading(true);
@@ -74,41 +72,44 @@ const Profile = () => {
       </div>
     );
   }
-
-  // Get the last action
   const lastAction = profile?.actions?.[profile.actions.length - 1];
   let actionColor = '';
 
   if (lastAction) {
     switch (lastAction) {
       case 'WARNING':
-        actionColor = 'bg-yellow-200 text-yellow-700'; // Yellow for warning
+        actionColor = 'bg-yellow-200 text-yellow-700'; 
         break;
       case 'SUSPENSION':
-        actionColor = 'bg-orange-200 text-orange-700'; // Orange for suspension
+        actionColor = 'bg-orange-200 text-orange-700';
         break;
       case 'BAN':
-        actionColor = 'bg-red-200 text-red-700'; // Red for ban
+        actionColor = 'bg-red-200 text-red-700'; 
         break;
       default:
-        actionColor = 'bg-gray-200 text-gray-700'; // Default color
+        actionColor = 'bg-gray-200 text-gray-700'; 
     }
   }
 
   return (
+
+    // Display the user profile
     <div>
       <Header user={user} />
       <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
           <div className="flex items-center space-x-4 mb-6">
             <img
-              src={profile?.avatar || '/avatar.png'} // Replace with actual avatar field or a default placeholder
+              src={profile?.avatar || '/avatar.png'} 
               alt="Avatar"
               className="w-20 h-20 rounded-full object-cover"
             />
             <h1 className="text-2xl font-semibold text-gray-800">
-              Welcome, {profile?.role[0] === 'ADMIN' ? 'Admin' : 'User'} {profile?.name || ''}
+              Welcome,
+              {profile?.role[0] === 'ADMIN' ? 'Admin' : profile?.role[0] === 'MODERATOR' ? 'Moderator' : 'Employee'} 
+              {profile?.name || ''}
             </h1>
+
           </div>
           <div className="space-y-4 text-gray-700">
             <div>
@@ -125,14 +126,14 @@ const Profile = () => {
             </div>
             <div>
               <p className="font-medium">Department:</p>
-              <p className="text-gray-500">{profile?.role[0] === 'ADMIN' ? 'Management' : 'Development'}</p>
+              <p className="text-gray-500">{profile?.role[0] === 'CLIENT' ? 'Development' : 'Management'}</p>
             </div>
             <div>
               <p className="font-medium">Date of Joining:</p>
               <p className="text-gray-500">11/9/2010</p>
             </div>
 
-            {/* Display the last action with color theme */}
+        
             {lastAction && (
               <div>
                 <p className="font-medium">Action:</p>

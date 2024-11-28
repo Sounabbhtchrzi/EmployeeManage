@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [userActive, setUserActive] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,19 +19,18 @@ const ManageUsers = () => {
       setUserActive(parsedUser);
 
       if (!parsedUser.role.includes('ADMIN') ) {
-        navigate("/"); // Redirect to unauthorized page if user is not an admin
+        navigate("/"); 
       } else {
-        // Fetch users from the API when the component mounts
         const fetchUsers = async () => {
           try {
             const response = await axiosInstance.get('/api/admin/users');
             const filteredUsers = response.data.data.filter(user => user._id !== parsedUser.id);
-            setUsers(filteredUsers); // Set filtered users // Ensure response is an array
-            setLoading(false); // Set loading to false after fetching users
+            setUsers(filteredUsers);
+            setLoading(false); 
            
           } catch (error) {
             console.error('Error fetching users:', error);
-            setLoading(false); // Stop loading even if there's an error
+            setLoading(false); 
           }
         };
 
@@ -44,16 +43,14 @@ const ManageUsers = () => {
     try {
       console.log(userId);
       await axiosInstance.post('/api/admin/update-role', { id: userId, role: newRole });
-      // Optionally refresh users after the role update
-      const response = await axiosInstance.get('/api/admin/users');
-      setUsers(response.data.data || []);
+
     } catch (error) {
       console.error('Error updating user role:', error);
     }
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>; // Show loading message with spinner while data is being fetched
+    return <div className="flex justify-center items-center h-screen">Loading...</div>; 
   }
 
   return (
@@ -104,10 +101,6 @@ const ManageUsers = () => {
           )}
         </div>
       </div>
-
-      <footer className="bg-gray-200 py-4 mt-8">
-        {/* Include your footer component here */}
-      </footer>
     </div>
   );
 };

@@ -5,7 +5,6 @@ export const addActionToUser = async (req, res, next) => {
     try {
       const { id, action } = req.body;
   
-      // Validate ID and action
       if (!id || !action) {
         return res.status(400).json({
           success: false,

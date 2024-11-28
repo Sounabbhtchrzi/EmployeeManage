@@ -1,11 +1,11 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header"; // Adjust the path based on your project structure
+import Header from "../components/Header"; 
 
 const Home = () => {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate(); // Ensure this is correctly imported
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -18,10 +18,9 @@ const Home = () => {
 
   return (
     <div>
-      {/* Header Component */}
-        <Header user={user}/>
+      <Header user={user}/>
      
-      {/* Main Section with Background Image */}
+      {/* Main Section*/}
       <section
         className="relative h-screen bg-cover bg-center"
         style={{ backgroundImage: "url('/homeng.jpg')" }}
@@ -50,7 +49,7 @@ const Home = () => {
       <section className="py-16 bg-white text-gray-800">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="feature-card p-6 bg-gray-100 rounded-lg shadow-lg">
               <h3 className="text-2xl font-semibold mb-4">Express JS</h3>
               <p>
@@ -83,23 +82,10 @@ const Home = () => {
                 reboot, with MongoDB store integration.
               </p>
             </div>
-            <div className="feature-card p-6 bg-gray-100 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">Flash Messages</h3>
-              <p>
-                Display flash messages for feedback to users after successful
-                actions or errors.
-              </p>
-            </div>
-            <div className="feature-card p-6 bg-gray-100 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-semibold mb-4">Error Handling</h3>
-              <p>
-                Gracefully handle errors like 404 pages and provide meaningful
-                messages to users.
-              </p>
-            </div>
           </div>
         </div>
       </section>
+
 
       {/* Call to Action Section */}
       <section className="py-16 bg-gray-800 text-white text-center">

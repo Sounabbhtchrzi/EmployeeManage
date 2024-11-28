@@ -49,8 +49,7 @@ export const getUserById = async (req, res, next) => {
 export const updateUserRole = async (req, res, next) => {
   try {
     const { id, role } = req.body;
-    console.log(id);
-    // Validate ID and role
+
     if (!id || !role) {
       return res.status(400).json({
         success: false,
@@ -73,7 +72,6 @@ export const updateUserRole = async (req, res, next) => {
       });
     }
 
-    // Update the user's role
     const user = await User.findByIdAndUpdate(
       id,
       { role },

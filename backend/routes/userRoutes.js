@@ -1,10 +1,10 @@
-import { Router } from 'express'; // Only import Router from express
-import { getProfile } from '../controllers/userController.js'; // Add .js extension for ES Modules
+import { Router } from 'express'; 
+import { getProfile } from '../controllers/userController.js'; 
 
-const router = Router(); // Initialize the router
+const router = Router(); 
 
 // Define the route for profile
 router.get('/profile/:id', getProfile);
 
 
-export default router; // Export the router
+export default router; 

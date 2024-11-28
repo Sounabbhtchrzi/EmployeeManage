@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ user }) => { 
   const id=user?.id;
-  const navigate = useNavigate(); // Ensure this is correctly imported
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Clear user data from localStorage
+    localStorage.removeItem('user');
     navigate('/'); 
     window.location.reload();
   };

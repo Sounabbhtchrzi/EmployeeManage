@@ -21,9 +21,8 @@ const ModeratorManageUsers = () => {
       setModerator(parsedUser);
 
       if (!parsedUser.role.includes('MODERATOR')) {
-        navigate('/'); // Redirect if the user is not a moderator
+        navigate('/'); 
       } else {
-        // Fetch users
         const fetchUsers = async () => {
           try {
             const response = await axiosInstance.get('/api/admin/users');
@@ -45,22 +44,17 @@ const ModeratorManageUsers = () => {
   const handleAction = async (userId, action) => {
     try {
       setLoading(true);
-      // Perform the action (e.g., suspend, warn)
       const response = await axiosInstance.post('/api/moderator/user-action', { id: userId, action });
 
       if (response.data.success) {
-        // Action was successful, refresh users
         const userListResponse = await axiosInstance.get('/api/admin/users');
-        setUsers(userListResponse.data.data.filter(user => user._id !== moderator.id)); // Exclude self
+        setUsers(userListResponse.data.data.filter(user => user._id !== moderator.id)); 
 
-        // Show success message
         setSuccessMessage(`Action '${action}' was successfully performed on the user.`);
       } else {
-        // Handle failure response from the API
         setError(`Failed to perform the action: ${response.data.message}`);
       }
     } catch (error) {
-      // Handle network errors or other issues
       console.error(`Error performing ${action} on user:`, error);
       setError('An error occurred while performing the action. Please try again.');
     } finally {
@@ -118,10 +112,6 @@ const ModeratorManageUsers = () => {
           )}
         </div>
       </div>
-
-      <footer className="bg-gray-200 py-4 mt-8">
-        {/* Include your footer component here */}
-      </footer>
     </div>
   );
 };

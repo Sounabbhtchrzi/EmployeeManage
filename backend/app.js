@@ -1,4 +1,3 @@
-// Import required modules
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -7,7 +6,6 @@ import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import bodyParser from 'body-parser';
-import flash from 'connect-flash';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -15,7 +13,7 @@ import authRoutes from './routes/authRoutes.js';
 import moderatorRoutes from './routes/moderatorRoutes.js';
 import "./utils/passport.js"
 
-// Load environment variables from .env file
+
 dotenv.config();
 
 // Initialize express app
@@ -31,8 +29,8 @@ app.use(bodyParser.json());
 // Enable CORS to allow requests from your React frontend
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // Your React frontend URL
-    credentials: true, // Allow credentials like cookies
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
   })
 );
 
@@ -45,7 +43,7 @@ mongoose
 // Configure session management
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Store your secret in .env
+    secret: process.env.SESSION_SECRET, 
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -53,9 +51,9 @@ app.use(
       collectionName: 'sessions',
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 1000 * 60 * 60 * 24, 
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production', 
     },
   })
 );
@@ -64,17 +62,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// Flash messages middleware
-app.use(flash());
-
-// Middleware to set global variables for flash messages
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-});
 
 
 // Set up routes

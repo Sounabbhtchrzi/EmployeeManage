@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../utils/AxiosInstance'; // Ensure this is correctly imported
+import axiosInstance from '../../utils/AxiosInstance';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,11 +20,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Clear previous error messages
     setErrorMessages([]);
 
-    // Simple client-side validation
     const errors = [];
     if (!formData.email) errors.push("Email is required.");
     if (!formData.password) errors.push("Password is required.");
@@ -35,12 +32,11 @@ const Login = () => {
       try {
         const response = await axiosInstance.post("api/auth/login", formData);
         
-        // On successful login
         if (response.data.success) {
           alert("Login successful!");
           localStorage.setItem('user', JSON.stringify(response.data.user));
           const userId =response.data.user.id;
-          navigate(`/profile/${userId}`); // Redirect to the profile page after login
+          navigate(`/profile/${userId}`);
         } else {
           setErrorMessages([response.data.message || "Login failed. Please try again."]);
         }
@@ -52,12 +48,12 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-between bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
-      {/* Header Section */}
+     
       <header className="w-full text-center mb-8">
         <h1 className="text-3xl font-semibold text-gray-800">Login</h1>
       </header>
 
-      {/* Display Flash/Error Messages */}
+
       {errorMessages.length > 0 && (
         <div className="w-full max-w-md mx-auto mb-6">
           <div className="bg-red-100 text-red-700 p-4 rounded-md">

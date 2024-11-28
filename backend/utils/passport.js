@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from '../models/userModel.js'; // Ensure you use the .js extension
+import User from '../models/userModel.js';
 
 passport.use(
   new LocalStrategy(
@@ -11,13 +11,13 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
-        // Username/email does NOT exist
+
         if (!user) {
           return done(null, false, {
             message: 'Username/email not registered',
           });
         }
-        // Email exists and now we need to verify the password
+       
         const isMatch = await user.isValidPassword(password);
         return isMatch
           ? done(null, user)
@@ -39,4 +39,4 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-export default passport; // Export passport so it can be imported elsewhere
+export default passport; 
